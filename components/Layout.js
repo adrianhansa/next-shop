@@ -7,11 +7,11 @@ const Layout = ({ children }) => {
     <div>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
-          <Typography variant="h3">Shop Online</Typography>
+          <Typography variant="h5">Shop Online</Typography>
         </Toolbar>
       </AppBar>
-      <Container>{children}</Container>
-      <footer>
+      <Container className={classes.main}>{children}</Container>
+      <footer className={classes.footer}>
         <Typography>
           Next Shop of Great Ideas. All rights reserved &copy; Adrian Hansa 2022
         </Typography>
