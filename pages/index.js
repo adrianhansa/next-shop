@@ -1,6 +1,8 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 import Layout from '../components/Layout';
+import data from '../utils/data';
+import { Grid, Typography } from '@mui/material';
+import ProductCard from '../components/ProductCard';
 
 export default function Home() {
   return (
@@ -14,12 +16,16 @@ export default function Home() {
         <main>
           <div>
             <h3>Shop Online</h3>
-            <h4>Products</h4>
-            <ul>
-              <li>Product 1</li>
-              <li>Product 2</li>
-              <li>Product 3</li>
-            </ul>
+            <Typography variant="h3">Products</Typography>
+            <Grid container spacing={2}>
+              {data.products.map((product) => {
+                return (
+                  <Grid item md={4} key={product.name}>
+                    <ProductCard product={product} />
+                  </Grid>
+                );
+              })}
+            </Grid>
           </div>
         </main>
       </Layout>
