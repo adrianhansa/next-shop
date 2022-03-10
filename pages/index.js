@@ -13,21 +13,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main>
-          <div>
-            <h3>Shop Online</h3>
-            <Typography variant="h3">Products</Typography>
-            <Grid container spacing={2}>
-              {data.products.map((product) => {
-                return (
-                  <Grid item md={4} key={product.name}>
-                    <ProductCard product={product} />
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div>
-        </main>
+        <h3>Shop Online</h3>
+        <Typography variant="h3">Products</Typography>
+        <Grid container spacing={2}>
+          {data.products.map((product) => {
+            return (
+              <Grid item md={4} key={product.name}>
+                <ProductCard product={product} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Layout>
     </div>
   );
