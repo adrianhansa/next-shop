@@ -1,11 +1,17 @@
 import { AppBar, Container, Toolbar, Typography } from '@mui/material';
 import useStyles from '../utils/styles';
 import Link from 'next/link';
+import Head from 'next/head';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title, description }) => {
   const classes = useStyles();
   return (
     <div>
+      <Head>
+        <title>{title ? `${title} - Next Shop` : 'Next Shop'}</title>
+        {description && <meta name="description" content={description} />}
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <Typography variant="h5" className={classes.brand}>
