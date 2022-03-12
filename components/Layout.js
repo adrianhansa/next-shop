@@ -6,17 +6,19 @@ import {
   ThemeProvider,
   Toolbar,
   Typography,
+  Switch,
   CssBaseline,
 } from '@mui/material';
 import useStyles from '../utils/styles';
 import Link from 'next/link';
 import Head from 'next/head';
 import { Store } from '../utils/Store';
+import Cookies from 'js-cookie';
 
 const Layout = ({ children, title, description }) => {
+  const label = { inputProps: { 'aria-label': 'Theme' } };
   const { state, dispatch } = useContext(Store);
   const { darkMode } = state;
-  console.log(state);
   const theme = createTheme({
     typography: {
       h1: {
@@ -41,6 +43,13 @@ const Layout = ({ children, title, description }) => {
     },
   });
   const classes = useStyles();
+  const themeHandler = () => {
+    dispatch({
+      type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON',
+    });
+    const newDarkMode = !darkMode;
+    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+  };
   return (
     <div>
       <Head>
@@ -54,6 +63,12 @@ const Layout = ({ children, title, description }) => {
           <Toolbar>
             <Typography variant="h5" className={classes.brand}>
               <Link href="/">Shop Online </Link>
+              <Switch
+                {...label}
+                checked={darkMode}
+                color="primary"
+                onChange={themeHandler}
+              />
             </Typography>
             <div className={classes.grow}></div>
             <div>
