@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   AppBar,
   Container,
@@ -10,8 +11,12 @@ import {
 import useStyles from '../utils/styles';
 import Link from 'next/link';
 import Head from 'next/head';
+import { Store } from '../utils/Store';
 
 const Layout = ({ children, title, description }) => {
+  const { state, dispatch } = useContext(Store);
+  const { darkMode } = state;
+  console.log(state);
   const theme = createTheme({
     typography: {
       h1: {
@@ -26,7 +31,7 @@ const Layout = ({ children, title, description }) => {
       },
     },
     palette: {
-      type: 'light',
+      mode: darkMode ? 'dark' : 'light',
       primary: {
         main: '#f0c000',
       },
