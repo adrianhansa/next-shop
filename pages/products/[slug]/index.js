@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import data from '../../../utils/data';
 import {
   Typography,
   List,
@@ -14,13 +13,11 @@ import {
 import Layout from '../../../components/Layout';
 import useStyles from '../../../utils/styles';
 import Image from 'next/image';
+import Product from '../../../models/Product';
+import db from '../../../utils/db';
 
-const ProductDetails = () => {
-  const router = useRouter();
+const ProductDetails = ({ product }) => {
   const classes = useStyles();
-  const product = data.products.find(
-    (product) => product.slug === router.query.slug
-  );
   return (
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
@@ -104,3 +101,16 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: db.convertDocToObj(product),
+    },
+  };
+}

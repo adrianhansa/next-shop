@@ -1,9 +1,10 @@
 import Layout from '../components/Layout';
-import data from '../utils/data';
 import { Grid, Typography } from '@mui/material';
 import ProductCard from '../components/ProductCard';
+import db from '../utils/db';
+import Product from '../models/Product';
 
-export default function Home() {
+export default function Home({ products }) {
   return (
     <div>
       <Layout
@@ -13,7 +14,7 @@ export default function Home() {
         <h3>Shop Online</h3>
         <Typography variant="h3">Products</Typography>
         <Grid container spacing={2}>
-          {data.products.map((product) => {
+          {products.map((product) => {
             return (
               <Grid item md={4} key={product.name}>
                 <ProductCard product={product} />
@@ -24,4 +25,15 @@ export default function Home() {
       </Layout>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  await db.connect();
+  const products = await Product.find().lean();
+  await db.disconnect();
+  return {
+    props: {
+      products: products.map(db.convertDocToObj),
+    },
+  };
 }
